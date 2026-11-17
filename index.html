@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinanceAI | Invoice Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">◆</span> FinanceAI</div>
+    <nav>
+      <button class="nav active" data-view="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav" data-view="invoices">▤ <span>Invoices</span></button>
+      <button class="nav" data-view="review">◷ <span>Review Queue</span><b id="reviewBadge">0</b></button>
+    </nav>
+    <div class="sidebar-foot">PORTFOLIO DEMO<br><small>Sample data only</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">FINANCE OPERATIONS</p><h1 id="pageTitle">Dashboard</h1></div>
+      <button class="btn primary" id="newInvoiceTop">＋ New invoice</button>
+    </header>
+
+    <section class="view" id="dashboardView">
+      <div class="stats">
+        <article class="stat"><span>Total invoices</span><strong id="totalCount">0</strong><small>All recorded invoices</small></article>
+        <article class="stat"><span>Processed</span><strong id="processedCount">0</strong><small>Approved in this demo</small></article>
+        <article class="stat"><span>For review</span><strong id="reviewCount">0</strong><small>Awaiting approval</small></article>
+        <article class="stat"><span>Total value</span><strong id="totalValue">₱0.00</strong><small>Across all invoices</small></article>
+      </div>
+      <section class="panel">
+        <div class="panel-head"><div><h2>Recent invoices</h2><p>Track supplier bills and processing status.</p></div><button class="text-btn" data-go="invoices">View all →</button></div>
+        <div id="recentTable"></div>
+      </section>
+      <section class="panel">
+        <h2>Invoice workflow</h2>
+        <div class="workflow"><span>01 · Add invoice</span><i>→</i><span>02 · Extract details</span><i>→</i><span>03 · Review</span><i>→</i><span>04 · Approve</span></div>
+        <p class="note">Demo mode: extraction and approval are simulated. No external accounting system is connected.</p>
+      </section>
+    </section>
+
+    <section class="view hidden" id="invoicesView">
+      <section class="panel">
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Search invoice number or supplier">
+          <select id="statusFilter"><option value="">All statuses</option><option>For Review</option><option>Processed</option><option>Changes Requested</option></select>
+          <button class="btn primary" id="newInvoiceBtn">＋ New invoice</button>
+        </div>
+        <div id="invoiceTable"></div>
+      </section>
+    </section>
+
+    <section class="view hidden" id="reviewView">
+      <section class="panel">
+        <div class="panel-head"><div><h2>Review queue</h2><p>Check invoice details before marking them approved.</p></div></div>
+        <div id="reviewList"></div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="invoiceDialog">
+    <form id="invoiceForm">
+      <div class="dialog-head"><h2>Add invoice</h2><button type="button" class="close" id="closeDialog">×</button></div>
+      <label>Supplier name<input name="supplier" required placeholder="e.g. ABC Supplies"></label>
+      <label>Invoice number<input name="number" required placeholder="e.g. INV-1005"></label>
+      <div class="two">
+        <label>Invoice date<input name="date" type="date" required></label>
+        <label>Due date<input name="due" type="date"></label>
+      </div>
+      <label>Amount (PHP)<input name="amount" type="number" min="0.01" step="0.01" required placeholder="0.00"></label>
+      <div class="dialog-actions"><button type="button" class="btn secondary" id="cancelDialog">Cancel</button><button type="submit" class="btn primary">Save invoice</button></div>
+    </form>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
